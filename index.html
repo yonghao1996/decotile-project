@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>우리 집 바닥 바꿔보기 | HOTTN</title>
+
+  <!-- ✅ 상대경로 유지 -->
+  <link rel="stylesheet" href="static/style.css"/>
+
+  <!-- HEIC 변환 -->
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js" defer></script>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brandRow">
+        <div class="badge">HOTTN</div>
+        <div class="title">
+          <div class="big">우리 집 바닥 바꿔보기</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="phone">
+        <div class="screen" id="screen">
+
+          <!-- 업로드 이미지 -->
+          <img
+            id="baseImage"
+            class="base"
+            alt="업로드 이미지"
+            style="display:none; width:100%; height:100%; object-fit:cover;"
+          />
+
+          <!-- (사용 안 해도 OK) 오버레이 레이어 -->
+          <div class="floorOverlay" id="floorOverlay"></div>
+
+          <!-- 상태 바(항상 보이게) -->
+          <div class="hint statusBar" id="statusHint">바닥이 잘 보이게 찍어주세요</div>
+
+          <!-- 업로드 버튼 영역 -->
+          <div class="centerAction" id="centerAction">
+            <input id="fileInput" type="file" accept="image/*,.heic,.heif" style="display:none;" />
+            <div class="centerActionInner">
+              <button id="captureBtn" class="captureBtn" type="button">사진 업로드</button>
+            </div>
+          </div>
+
+          <!-- 하단 바 -->
+          <div class="swatchBar">
+
+            <!-- 액션 버튼 -->
+            <div class="actionsRow" style="display:flex; gap:8px; margin:8px 0 6px; flex-wrap:wrap;">
+              <button id="btnUndo" class="captureBtn" type="button" style="padding:10px 12px;">↩ 되돌리기</button>
+              <button id="btnRedo" class="captureBtn" type="button" style="padding:10px 12px;">↪ 다시하기</button>
+              <button id="btnReset" class="captureBtn" type="button" style="padding:10px 12px;">⟲ 원본</button>
+              <button id="btnDownload" class="captureBtn" type="button" style="padding:10px 12px;">⬇ 저장</button>
+            </div>
+
+            <!-- ✅ 옵션(타일) 선택 영역: id="swatches" 그대로 -->
+            <div class="swatches" id="swatches">
+
+              <!-- ✅ 첫 번째는 기본 active 주는 게 좋아 (시각적으로) -->
+              <button class="swatchCard active" type="button"
+                data-name="블루그레이" data-img="static/tiles/bluegray.png">
+                <div class="thumb" style="background-image:url('static/tiles/bluegray.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">블루그레이</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="마블딥그레이" data-img="static/tiles/deepgray.png">
+                <div class="thumb" style="background-image:url('static/tiles/deepgray.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">마블딥그레이</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="그레이스톤" data-img="static/tiles/graystone.png">
+                <div class="thumb" style="background-image:url('static/tiles/graystone.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">그레이스톤</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="허니스톤" data-img="static/tiles/honeystone.png">
+                <div class="thumb" style="background-image:url('static/tiles/honeystone.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">허니스톤</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="마블화이트" data-img="static/tiles/marblewhite.png">
+                <div class="thumb" style="background-image:url('static/tiles/marblewhite.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">마블화이트</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="실버화이트" data-img="static/tiles/silverwhite.png">
+                <div class="thumb" style="background-image:url('static/tiles/silverwhite.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">실버화이트</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="테라조베이지" data-img="static/tiles/terazzobeige.png">
+                <div class="thumb" style="background-image:url('static/tiles/terazzobeige.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">테라조베이지</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="테라조그레이" data-img="static/tiles/terazzogray.png">
+                <div class="thumb" style="background-image:url('static/tiles/terazzogray.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">테라조그레이</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="테라조스노우칩" data-img="static/tiles/terazzosnowchip.png">
+                <div class="thumb" style="background-image:url('static/tiles/terazzosnowchip.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">테라조스노우칩</div></div>
+              </button>
+
+              <button class="swatchCard" type="button"
+                data-name="테라조화이트" data-img="static/tiles/terazzowhite.png">
+                <div class="thumb" style="background-image:url('static/tiles/terazzowhite.png'); background-size:cover;"></div>
+                <div class="label"><div class="name">테라조화이트</div></div>
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ✅ app.js는 body 끝에서 로드 (DOM 다 생긴 뒤라 안정적) -->
+  <script src="static/app.js"></script>
+</body>
+</html>

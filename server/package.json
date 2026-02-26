@@ -1,0 +1,16 @@
+{
+  "name": "decotile-proxy",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "express": "^4.19.2",
+    "sharp": "^0.34.5",
+    "undici": "^7.22.0"
+  }
+}
